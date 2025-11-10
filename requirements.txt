@@ -1,0 +1,36 @@
+# ============================================================================
+# Dependencias - SentimentInsightUAM_SA (Análisis de Sentimientos)
+# ============================================================================
+
+# Base de datos (conexión a BD existentes del proyecto principal)
+sqlalchemy[asyncio]>=2.0
+asyncpg>=0.29
+psycopg2-binary>=2.9
+motor>=3.3
+pymongo>=4.8
+
+# Utilidades core
+pydantic>=2.9
+python-slugify>=8.0
+tenacity>=9.0
+python-dotenv>=1.0
+
+# Machine Learning y NLP
+transformers>=4.35.0       # HuggingFace Transformers para BERT
+torch>=2.0.0               # PyTorch (backend para BERT)
+# Si prefieres TensorFlow: tensorflow>=2.15.0
+scikit-learn>=1.3.0        # Utilidades ML
+numpy>=1.24.0              # Operaciones numéricas
+pandas>=2.1.0              # Manipulación de datos
+
+# NLP específico
+nltk>=3.8                  # Natural Language Toolkit
+spacy>=3.7                 # Procesamiento de lenguaje natural (opcional)
+
+# Análisis y visualización (opcional para debugging)
+matplotlib>=3.7.0
+seaborn>=0.13.0
+
+# Testing (desarrollo)
+pytest>=7.4.0
+pytest-asyncio>=0.21.0

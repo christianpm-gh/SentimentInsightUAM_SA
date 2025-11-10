@@ -1,0 +1,109 @@
+# ============================================================================
+# .gitignore - SentimentInsightUAM_SA
+# ============================================================================
+
+# ============================================================================
+# Python
+# ============================================================================
+# Entorno virtual
+venv/
+env/
+ENV/
+.venv/
+
+# Archivos compilados
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+*.egg
+*.egg-info/
+dist/
+build/
+*.whl
+
+# ============================================================================
+# Configuración Sensible
+# ============================================================================
+.env
+.env.local
+*.secret
+secrets/
+
+# ============================================================================
+# Modelos de Machine Learning
+# ============================================================================
+# Modelos descargados de HuggingFace (pueden ser muy grandes)
+models/cache/
+models/fine-tuned/
+*.pt
+*.pth
+*.bin
+*.safetensors
+
+# Excepto archivos de configuración de modelos
+!models/config/
+
+# ============================================================================
+# Datos y Resultados
+# ============================================================================
+# Resultados de análisis
+data/outputs/
+data/results/
+data/temp/
+
+# Logs
+logs/
+*.log
+
+# Notebooks de Jupyter (opcional)
+.ipynb_checkpoints/
+*.ipynb
+
+# ============================================================================
+# IDEs y Editores
+# ============================================================================
+# VSCode
+.vscode/
+!.vscode/settings.json.example
+!.vscode/extensions.json
+
+# PyCharm
+.idea/
+
+# Sublime Text
+*.sublime-project
+*.sublime-workspace
+
+# ============================================================================
+# Sistema Operativo
+# ============================================================================
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Linux
+*~
+.directory
+
+# Windows
+Thumbs.db
+Desktop.ini
+
+# ============================================================================
+# Testing y Coverage
+# ============================================================================
+.pytest_cache/
+.coverage
+htmlcov/
+.tox/
+
+# ============================================================================
+# Otros
+# ============================================================================
+# Backups
+*.bak
+*.swp
+*.swo
+*~
