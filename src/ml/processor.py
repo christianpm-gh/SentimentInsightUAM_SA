@@ -21,10 +21,12 @@ from src.db.repository import (
     obtener_opiniones_pendientes_sentimiento,
     contar_opiniones_pendientes_sentimiento,
     actualizar_sentimiento_general,
+    actualizar_categorizacion,
     obtener_opiniones_por_profesor,
     obtener_opiniones_por_curso
 )
 from src.ml import get_analyzer, SentimentAnalyzer
+from src.ml.categorizer import get_categorizer, OpinionCategorizer
 
 logger = logging.getLogger(__name__)
 
@@ -45,6 +47,7 @@ class OpinionProcessor:
         """
         self.batch_size = batch_size
         self.analyzer: Optional[SentimentAnalyzer] = None
+        self.categorizer: Optional[OpinionCategorizer] = None
         
     async def init_analyzer(self) -> None:
         """
@@ -56,6 +59,11 @@ class OpinionProcessor:
             self.analyzer = get_analyzer()
             self.analyzer.load_model()
             logger.info("✓ Analizador listo")
+        
+        if self.categorizer is None:
+            logger.info("Inicializando categorizador...")
+            self.categorizer = get_categorizer()
+            logger.info("✓ Categorizador listo")
     
     async def procesar_pendientes(
         self,
@@ -184,10 +192,11 @@ class OpinionProcessor:
             limit=limit
         )
         
-        # Filtrar solo las no analizadas
+        # Filtrar solo las no analizadas (sentimiento O categorización pendiente)
         opiniones_pendientes = [
             op for op in opiniones
-            if not op.get("sentimiento_general", {}).get("analizado", False)
+            if (not op.get("sentimiento_general", {}).get("analizado", False) or
+                not op.get("categorizacion", {}).get("analizado", False))
         ]
         
         if not opiniones_pendientes:
@@ -205,23 +214,40 @@ class OpinionProcessor:
         textos = [op.get("comentario", "") for op in opiniones_pendientes]
         opinion_ids = [str(op["_id"]) for op in opiniones_pendientes]
         
-        resultados = self.analyzer.analizar_batch(textos, self.batch_size)
+        # Análisis de sentimiento
+        resultados_sentimiento = self.analyzer.analizar_batch(textos, self.batch_size)
+        
+        # Análisis de categorización
+        resultados_categorizacion = self.categorizer.categorizar_batch(textos)
         
         exitosas = 0
         errores = 0
         
-        for opinion_id, resultado in zip(opinion_ids, resultados):
+        for opinion_id, resultado_sent, resultado_cat in zip(
+            opinion_ids, resultados_sentimiento, resultados_categorizacion
+        ):
             try:
-                actualizado = await actualizar_sentimiento_general(
+                # Actualizar sentimiento general
+                actualizado_sent = await actualizar_sentimiento_general(
                     opinion_id=opinion_id,
-                    clasificacion=resultado.clasificacion,
-                    pesos=resultado.pesos,
-                    confianza=resultado.confianza,
+                    clasificacion=resultado_sent.clasificacion,
+                    pesos=resultado_sent.pesos,
+                    confianza=resultado_sent.confianza,
                     modelo_version=self.analyzer.get_model_version(),
-                    tiempo_procesamiento_ms=resultado.tiempo_ms
+                    tiempo_procesamiento_ms=resultado_sent.tiempo_ms
                 )
                 
-                if actualizado:
+                # Actualizar categorización
+                actualizado_cat = await actualizar_categorizacion(
+                    opinion_id=opinion_id,
+                    calidad_didactica=resultado_cat.calidad_didactica,
+                    metodo_evaluacion=resultado_cat.metodo_evaluacion,
+                    empatia=resultado_cat.empatia,
+                    modelo_version=self.categorizer.get_version(),
+                    tiempo_procesamiento_ms=resultado_cat.tiempo_ms
+                )
+                
+                if actualizado_sent and actualizado_cat:
                     exitosas += 1
                 else:
                     errores += 1
@@ -264,10 +290,11 @@ class OpinionProcessor:
             limit=limit
         )
         
-        # Filtrar solo las no analizadas
+        # Filtrar solo las no analizadas (sentimiento O categorización pendiente)
         opiniones_pendientes = [
             op for op in opiniones
-            if not op.get("sentimiento_general", {}).get("analizado", False)
+            if (not op.get("sentimiento_general", {}).get("analizado", False) or
+                not op.get("categorizacion", {}).get("analizado", False))
         ]
         
         if not opiniones_pendientes:
@@ -284,23 +311,40 @@ class OpinionProcessor:
         textos = [op.get("comentario", "") for op in opiniones_pendientes]
         opinion_ids = [str(op["_id"]) for op in opiniones_pendientes]
         
-        resultados = self.analyzer.analizar_batch(textos, self.batch_size)
+        # Análisis de sentimiento
+        resultados_sentimiento = self.analyzer.analizar_batch(textos, self.batch_size)
+        
+        # Análisis de categorización
+        resultados_categorizacion = self.categorizer.categorizar_batch(textos)
         
         exitosas = 0
         errores = 0
         
-        for opinion_id, resultado in zip(opinion_ids, resultados):
+        for opinion_id, resultado_sent, resultado_cat in zip(
+            opinion_ids, resultados_sentimiento, resultados_categorizacion
+        ):
             try:
-                actualizado = await actualizar_sentimiento_general(
+                # Actualizar sentimiento general
+                actualizado_sent = await actualizar_sentimiento_general(
                     opinion_id=opinion_id,
-                    clasificacion=resultado.clasificacion,
-                    pesos=resultado.pesos,
-                    confianza=resultado.confianza,
+                    clasificacion=resultado_sent.clasificacion,
+                    pesos=resultado_sent.pesos,
+                    confianza=resultado_sent.confianza,
                     modelo_version=self.analyzer.get_model_version(),
-                    tiempo_procesamiento_ms=resultado.tiempo_ms
+                    tiempo_procesamiento_ms=resultado_sent.tiempo_ms
                 )
                 
-                if actualizado:
+                # Actualizar categorización
+                actualizado_cat = await actualizar_categorizacion(
+                    opinion_id=opinion_id,
+                    calidad_didactica=resultado_cat.calidad_didactica,
+                    metodo_evaluacion=resultado_cat.metodo_evaluacion,
+                    empatia=resultado_cat.empatia,
+                    modelo_version=self.categorizer.get_version(),
+                    tiempo_procesamiento_ms=resultado_cat.tiempo_ms
+                )
+                
+                if actualizado_sent and actualizado_cat:
                     exitosas += 1
                 else:
                     errores += 1

@@ -140,7 +140,7 @@ ANÁLISIS DE SENTIMIENTO - Opiniones Pendientes
 ================================================================================
 
 Total de opiniones pendientes: 250
-Modelo BERT: dccuchile/bert-base-spanish-wwm-cased-v1.0
+Modelo BERT: finiteautomata/beto-sentiment-analysis-v1.0
 
 Procesando hasta 100 opiniones...
 
@@ -194,7 +194,7 @@ ESTADÍSTICAS DE ANÁLISIS DE SENTIMIENTO
 ================================================================================
 
 Opiniones pendientes de análisis: 250
-Modelo BERT configurado: dccuchile/bert-base-spanish-wwm-cased-v1.0
+Modelo BERT configurado: finiteautomata/beto-sentiment-analysis-v1.0
 
 ================================================================================
 ```
@@ -215,12 +215,12 @@ MONGO_URL=mongodb://sentiment_admin:dev_password_2024@localhost:27017/sentiment_
 # ============================================================================
 # Modelo BERT
 # ============================================================================
-# Modelo recomendado para español
-BERT_MODEL_NAME=dccuchile/bert-base-spanish-wwm-cased
+# Modelo recomendado para español (BETO Sentiment Analysis)
+BERT_MODEL_NAME=finiteautomata/beto-sentiment-analysis
 
 # Alternativas:
+# BERT_MODEL_NAME=dccuchile/bert-base-spanish-wwm-cased
 # BERT_MODEL_NAME=PlanTL-GOB-ES/roberta-base-bne
-# BERT_MODEL_NAME=mrm8488/distilroberta-finetuned-sentiment-spa
 
 # Ruta de cache del modelo (descarga automática)
 MODEL_CACHE_DIR=./models/cache
@@ -251,9 +251,9 @@ DEBUG=false
 
 | Modelo | Descripción | Tamaño |
 |--------|-------------|--------|
-| `dccuchile/bert-base-spanish-wwm-cased` | ✅ **Recomendado** - BERT base español | ~420MB |
+| `finiteautomata/beto-sentiment-analysis` | ✅ **Recomendado** - BETO afinado para sentimientos | ~440MB |
+| `dccuchile/bert-base-spanish-wwm-cased` | BERT base español (General) | ~420MB |
 | `PlanTL-GOB-ES/roberta-base-bne` | RoBERTa español (Gobierno España) | ~500MB |
-| `mrm8488/distilroberta-finetuned-sentiment-spa` | DistilRoBERTa optimizado para sentimiento | ~300MB |
 
 ---
 
@@ -395,5 +395,5 @@ Proyecto educativo - Universidad Autónoma Metropolitana (UAM) Azcapotzalco
 
 ---
 
-**Última actualización**: 2025-11-09  
-**Versión**: 1.0.0
+**Última actualización**: 2025-11-23  
+**Versión**: 1.1.0

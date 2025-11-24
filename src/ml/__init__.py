@@ -156,6 +156,9 @@ class SentimentAnalyzer:
                 "POSITIVE": "positivo",
                 "NEGATIVE": "negativo",
                 "NEUTRAL": "neutral",
+                "POS": "positivo",
+                "NEG": "negativo",
+                "NEU": "neutral",
                 "LABEL_0": "negativo",
                 "LABEL_1": "neutral",
                 "LABEL_2": "positivo"
@@ -229,6 +232,9 @@ class SentimentAnalyzer:
                 "POSITIVE": "positivo",
                 "NEGATIVE": "negativo",
                 "NEUTRAL": "neutral",
+                "POS": "positivo",
+                "NEG": "negativo",
+                "NEU": "neutral",
                 "LABEL_0": "negativo",
                 "LABEL_1": "neutral",
                 "LABEL_2": "positivo"

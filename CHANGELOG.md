@@ -101,11 +101,11 @@ DEBUG=false
 
 #### 🚀 Próximos Pasos (Roadmap)
 
-**Fase 2: Categorización por Aspectos (v1.1.0)**
-- [ ] Módulo de categorización (calidad didáctica, método evaluación, empatía)
-- [ ] Campo `categorizacion` en MongoDB
-- [ ] Comando CLI `categorizar`
-- [ ] Modelo fine-tuned específico
+**Fase 2: Categorización por Aspectos (v1.1.0) - ✅ COMPLETADO**
+- [x] Módulo de categorización (calidad didáctica, método evaluación, empatía)
+- [x] Campo `categorizacion` en MongoDB
+- [x] Integración en comandos existentes
+- [ ] Modelo fine-tuned específico (Pendiente)
 
 **Fase 3: API REST (v2.0.0)**
 - [ ] FastAPI con endpoints de análisis
@@ -124,6 +124,31 @@ DEBUG=false
 - [ ] Cache inteligente de resultados
 - [ ] Procesamiento paralelo
 - [ ] Soporte para GPU multi-card
+
+---
+
+## [1.1.0] - 2025-11-23
+
+### 🚀 Mejoras en Análisis de Sentimiento
+
+#### Cambio de Modelo Base
+- **Nuevo Modelo**: `finiteautomata/beto-sentiment-analysis`
+- **Motivo**: El modelo anterior (`dccuchile/bert-base-spanish-wwm-cased`) mostraba baja precisión en opiniones informales, clasificando erróneamente reseñas positivas como negativas.
+- **Mejora**: Precisión drásticamente superior en detección de polaridad (Positivo/Negativo) en lenguaje natural de estudiantes.
+- **Validación**: Pruebas con profesor "Josue Padilla" mostraron una correlación del ~95% con los datos de recomendación originales, frente al ~10% del modelo anterior.
+
+#### ✨ Nueva Característica: Categorización por Aspectos
+- Implementación de `OpinionCategorizer` para clasificar opiniones en 3 ejes:
+    - **Calidad Didáctica**: Claridad, dominio del tema.
+    - **Método de Evaluación**: Dificultad, tareas, exámenes.
+    - **Empatía**: Trato al alumno, accesibilidad.
+- Integración en el flujo de procesamiento (`OpinionProcessor`).
+- Almacenamiento de resultados estructurados en MongoDB.
+
+#### 🔧 Ajustes Técnicos
+- Actualización de mapeo de etiquetas (labels) para soportar `POS`, `NEG`, `NEU` además de `POSITIVE`, `NEGATIVE`, `NEUTRAL`.
+- Limpieza de cache de modelos para forzar la descarga del nuevo modelo optimizado.
+- Actualización de documentación y ejemplos.
 
 ---
 

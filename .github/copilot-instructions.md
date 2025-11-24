@@ -49,7 +49,7 @@ src/
 - **Asíncrono total**: SQLAlchemy async + Motor
 
 ### ✅ Análisis de Sentimiento con BERT
-- **Modelo por defecto**: `dccuchile/bert-base-spanish-wwm-cased`
+- **Modelo por defecto**: `finiteautomata/beto-sentiment-analysis`
 - **Configuración**: Variables de entorno (.env)
 - **Soporte batch**: Procesamiento eficiente de múltiples textos
 - **Dispositivos**: CPU, CUDA (GPU NVIDIA), MPS (Apple Silicon)
@@ -94,6 +94,6 @@ pip install -r requirements.txt
 
 ---
 
-**Última actualización**: 2025-11-09  
-**Versión del proyecto**: 1.0.0  
+**Última actualización**: 2025-11-23  
+**Versión del proyecto**: 1.1.0  
 **Mantenedores**: Equipo SentimentInsightUAM - UAM Azcapotzalco
