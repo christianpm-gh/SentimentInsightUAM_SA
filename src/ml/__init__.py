@@ -126,10 +126,10 @@ class SentimentAnalyzer:
             
             self.model_version = f"{self.model_name}-v1.0"
             
-            logger.info("✓ Modelo BERT cargado exitosamente")
+            logger.info(f"✓ Modelo {self.model_name} cargado exitosamente")
         
         except Exception as e:
-            logger.error(f"✗ Error al cargar modelo BERT: {e}")
+            logger.error(f"✗ Error al cargar modelo {self.model_name}: {e}")
             raise
     
     def analizar(self, texto: str) -> SentimentResult:

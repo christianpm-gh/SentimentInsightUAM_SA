@@ -54,7 +54,7 @@ async def comando_analizar(args):
         # Mostrar estadísticas iniciales
         stats = await processor.obtener_estadisticas()
         print(f"Total de opiniones pendientes: {stats['total_pendientes']}")
-        print(f"Modelo BERT: {stats['modelo_version']}")
+        print(f"Modelo utilizado: {stats['modelo_version']}")
         print()
         
         if stats['total_pendientes'] == 0:
@@ -211,7 +211,7 @@ async def comando_stats(args):
         stats = await processor.obtener_estadisticas()
         
         print(f"Opiniones pendientes de análisis: {stats['total_pendientes']}")
-        print(f"Modelo BERT configurado: {stats['modelo_version']}")
+        print(f"Modelo configurado: {stats['modelo_version']}")
         print()
         
         print("="*80 + "\n")

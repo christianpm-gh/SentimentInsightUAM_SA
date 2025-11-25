@@ -52,13 +52,13 @@ class OpinionProcessor:
     async def init_analyzer(self) -> None:
         """
         Inicializa el analizador de sentimiento.
-        Carga el modelo BERT en memoria.
+        Carga el modelo en memoria.
         """
         if self.analyzer is None:
-            logger.info("Inicializando analizador BERT...")
             self.analyzer = get_analyzer()
+            logger.info(f"Inicializando analizador con modelo: {self.analyzer.model_name}...")
             self.analyzer.load_model()
-            logger.info("✓ Analizador listo")
+            logger.info(f"✓ Analizador listo ({self.analyzer.model_name})")
         
         if self.categorizer is None:
             logger.info("Inicializando categorizador...")
