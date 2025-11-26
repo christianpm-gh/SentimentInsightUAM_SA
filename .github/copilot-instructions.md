@@ -29,19 +29,20 @@ Módulo especializado de análisis de sentimientos para opiniones de profesores 
 ```
 src/
 ├── cli.py                 # CLI con 4 comandos: analizar, profesor, curso, stats
-├── core/                  # Utilidades core (futuro)
+├── core/                  # Utilidades core
 ├── db/
 │   ├── __init__.py        # Conexiones async a PostgreSQL + MongoDB
 │   ├── models.py          # Modelos ORM (solo lectura)
 │   └── repository.py      # Consultas especializadas
 └── ml/
     ├── __init__.py        # SentimentAnalyzer con BERT
+    ├── categorizer.py     # OpinionCategorizer (aspectos)
     └── processor.py       # OpinionProcessor (flujo completo)
 ```
 
 ---
 
-## 🔑 Características Implementadas (v1.0.0)
+## 🔑 Características Implementadas (v1.1.0)
 
 ### ✅ Conexión a Bases de Datos
 - **PostgreSQL**: Lectura de profesores, cursos, reseñas metadata
@@ -49,10 +50,15 @@ src/
 - **Asíncrono total**: SQLAlchemy async + Motor
 
 ### ✅ Análisis de Sentimiento con BERT
-- **Modelo por defecto**: `finiteautomata/beto-sentiment-analysis`
+- **Modelo recomendado**: `finiteautomata/beto-sentiment-analysis`
 - **Configuración**: Variables de entorno (.env)
 - **Soporte batch**: Procesamiento eficiente de múltiples textos
 - **Dispositivos**: CPU, CUDA (GPU NVIDIA), MPS (Apple Silicon)
+
+### ✅ Categorización por Aspectos
+- **Calidad Didáctica**: Claridad, dominio del tema, metodología
+- **Método de Evaluación**: Dificultad, justicia, carga de trabajo
+- **Empatía**: Trato al alumno, accesibilidad, comprensión
 
 ### ✅ CLI Completo
 1. **`analizar`** - Procesa opiniones pendientes
@@ -94,6 +100,18 @@ pip install -r requirements.txt
 
 ---
 
-**Última actualización**: 2025-11-23  
+## 📚 Documentación
+
+- **README.md**: Visión general y uso rápido
+- **CHANGELOG.md**: Historial de cambios
+- **CONTRIBUTING.md**: Guía para contribuidores
+- **docs/ARCHITECTURE.md**: Arquitectura detallada
+- **docs/SETUP.md**: Guía de instalación
+- **docs/DEVELOPMENT.md**: Guía de desarrollo
+- **docs/FLOWS.md**: Flujos críticos del sistema
+
+---
+
+**Última actualización**: 2025-11-26  
 **Versión del proyecto**: 1.1.0  
 **Mantenedores**: Equipo SentimentInsightUAM - UAM Azcapotzalco

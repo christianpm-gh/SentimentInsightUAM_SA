@@ -7,6 +7,50 @@ y este proyecto adhiere a [Versionado Semántico](https://semver.org/lang/es/).
 
 ---
 
+## [Unreleased]
+
+### Planificado
+- Worker asíncrono para procesamiento continuo
+- Sistema de jobs programados con APScheduler
+- Detección automática de idioma (español/inglés)
+- Análisis de aspectos específicos adicionales
+- Embeddings vectoriales para búsqueda semántica
+- API REST con FastAPI
+
+---
+
+## [1.1.0] - 2025-11-23
+
+### 🚀 Mejoras en Análisis de Sentimiento
+
+#### Cambio de Modelo Base
+- **Nuevo Modelo**: `finiteautomata/beto-sentiment-analysis`
+- **Modelo Anterior**: `dccuchile/bert-base-spanish-wwm-cased`
+- **Motivo**: El modelo anterior mostraba baja precisión en opiniones informales, clasificando erróneamente reseñas positivas como negativas
+- **Mejora**: Precisión drásticamente superior en detección de polaridad en lenguaje natural de estudiantes
+- **Validación**: Pruebas mostraron correlación del ~95% con datos de recomendación originales (vs ~10% del modelo anterior)
+
+### ✨ Nuevas Características
+
+#### Categorización por Aspectos
+- Implementación de `OpinionCategorizer` en `src/ml/categorizer.py`
+- Clasificación en 3 dimensiones:
+  - **Calidad Didáctica**: Claridad, dominio del tema, metodología
+  - **Método de Evaluación**: Dificultad, justicia, carga de trabajo
+  - **Empatía**: Trato al alumno, accesibilidad, comprensión
+- Integración en el flujo de procesamiento (`OpinionProcessor`)
+- Almacenamiento de resultados estructurados en MongoDB (campo `categorizacion`)
+
+### 🔧 Ajustes Técnicos
+- Actualización de mapeo de etiquetas para soportar `POS`, `NEG`, `NEU`
+- Limpieza de cache de modelos para forzar descarga del nuevo modelo
+- Actualización de documentación y ejemplos
+
+### 📦 Nuevos Archivos
+- `src/ml/categorizer.py` - Módulo de categorización por aspectos
+
+---
+
 ## [1.0.0] - 2025-11-09
 
 ### ✨ Lanzamiento Inicial - Módulo de Análisis de Sentimientos
@@ -14,7 +58,7 @@ y este proyecto adhiere a [Versionado Semántico](https://semver.org/lang/es/).
 #### 🎯 Características Principales
 
 **Análisis de Sentimiento con BERT**
-- Modelo por defecto: `dccuchile/bert-base-spanish-wwm-cased`
+- Modelo inicial: `dccuchile/bert-base-spanish-wwm-cased`
 - Configuración flexible via variables de entorno
 - Soporte para CPU, CUDA (NVIDIA GPU), MPS (Apple Silicon)
 - Procesamiento en batch para eficiencia
@@ -45,7 +89,7 @@ y este proyecto adhiere a [Versionado Semántico](https://semver.org/lang/es/).
 SentimentInsightUAM_SA/
 ├── src/
 │   ├── cli.py                 # CLI principal
-│   ├── core/                  # Utilidades (futuro)
+│   ├── core/                  # Utilidades
 │   ├── db/
 │   │   ├── __init__.py        # Conexiones BD
 │   │   ├── models.py          # Modelos ORM
@@ -53,11 +97,10 @@ SentimentInsightUAM_SA/
 │   └── ml/
 │       ├── __init__.py        # SentimentAnalyzer
 │       └── processor.py       # OpinionProcessor
+├── scripts/                   # Scripts de consulta
 ├── requirements.txt
 ├── .env.example
-├── .gitignore
-├── README.md
-└── .github/copilot-instructions.md
+└── README.md
 ```
 
 #### 🔧 Dependencias Principales
@@ -81,45 +124,23 @@ SentimentInsightUAM_SA/
 - **Type hints completos**: Mejor autocompletado y detección de errores
 - **Logging estructurado**: Mensajes informativos en todo el flujo
 
-#### 🔒 Variables de Entorno
+---
 
-```env
-# Bases de datos (compartidas con proyecto principal)
-DATABASE_URL=postgresql+asyncpg://...
-MONGO_URL=mongodb://...
+## Roadmap
 
-# Modelo BERT
-BERT_MODEL_NAME=dccuchile/bert-base-spanish-wwm-cased
-DEVICE=cpu
-BATCH_SIZE=8
-MODEL_CACHE_DIR=./models/cache
-
-# Configuración
-LOG_LEVEL=INFO
-DEBUG=false
-```
-
-#### 🚀 Próximos Pasos (Roadmap)
-
-**Fase 2: Categorización por Aspectos (v1.1.0) - ✅ COMPLETADO**
-- [x] Módulo de categorización (calidad didáctica, método evaluación, empatía)
-- [x] Campo `categorizacion` en MongoDB
-- [x] Integración en comandos existentes
-- [ ] Modelo fine-tuned específico (Pendiente)
-
-**Fase 3: API REST (v2.0.0)**
+### Fase 3: API REST (v2.0.0)
 - [ ] FastAPI con endpoints de análisis
 - [ ] Consulta de resultados por profesor/curso
 - [ ] Estadísticas agregadas
 - [ ] Documentación OpenAPI automática
 
-**Fase 4: Visualización (v2.1.0)**
+### Fase 4: Visualización (v2.1.0)
 - [ ] Dashboard de resultados
 - [ ] Gráficas de distribución de sentimientos
 - [ ] Tendencias temporales
 - [ ] Word clouds de opiniones
 
-**Fase 5: Optimización (v3.0.0)**
+### Fase 5: Optimización (v3.0.0)
 - [ ] Fine-tuning de modelo BERT para dominio UAM
 - [ ] Cache inteligente de resultados
 - [ ] Procesamiento paralelo
@@ -127,42 +148,6 @@ DEBUG=false
 
 ---
 
-## [1.1.0] - 2025-11-23
-
-### 🚀 Mejoras en Análisis de Sentimiento
-
-#### Cambio de Modelo Base
-- **Nuevo Modelo**: `finiteautomata/beto-sentiment-analysis`
-- **Motivo**: El modelo anterior (`dccuchile/bert-base-spanish-wwm-cased`) mostraba baja precisión en opiniones informales, clasificando erróneamente reseñas positivas como negativas.
-- **Mejora**: Precisión drásticamente superior en detección de polaridad (Positivo/Negativo) en lenguaje natural de estudiantes.
-- **Validación**: Pruebas con profesor "Josue Padilla" mostraron una correlación del ~95% con los datos de recomendación originales, frente al ~10% del modelo anterior.
-
-#### ✨ Nueva Característica: Categorización por Aspectos
-- Implementación de `OpinionCategorizer` para clasificar opiniones en 3 ejes:
-    - **Calidad Didáctica**: Claridad, dominio del tema.
-    - **Método de Evaluación**: Dificultad, tareas, exámenes.
-    - **Empatía**: Trato al alumno, accesibilidad.
-- Integración en el flujo de procesamiento (`OpinionProcessor`).
-- Almacenamiento de resultados estructurados en MongoDB.
-
-#### 🔧 Ajustes Técnicos
-- Actualización de mapeo de etiquetas (labels) para soportar `POS`, `NEG`, `NEU` además de `POSITIVE`, `NEGATIVE`, `NEUTRAL`.
-- Limpieza de cache de modelos para forzar la descarga del nuevo modelo optimizado.
-- Actualización de documentación y ejemplos.
-
----
-
-## [Unreleased]
-
-### Planificado
-- Worker asíncrono para procesamiento continuo
-- Sistema de jobs programados con APScheduler
-- Detección automática de idioma (español/inglés)
-- Análisis de aspectos específicos (explicación, disponibilidad, etc.)
-- Embeddings vectoriales para búsqueda semántica
-
----
-
-**Última actualización**: 2025-11-09  
-**Versión actual**: 1.0.0  
+**Versión actual**: 1.1.0  
+**Última actualización**: 2025-11-26  
 **Mantenedores**: Equipo SentimentInsightUAM - UAM Azcapotzalco
