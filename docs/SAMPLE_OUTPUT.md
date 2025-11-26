@@ -1,3 +1,12 @@
+# Ejemplo de Salida - SentimentInsightUAM_SA
+
+Este archivo muestra un ejemplo real de la salida del sistema de análisis de sentimientos.
+
+---
+
+## Análisis de Profesor (ID: 36)
+
+```
 ================================================================================
 ANÁLISIS DE PROFESOR
 ================================================================================
@@ -85,3 +94,26 @@ Empatía: NEUTRAL
 Modelo: keyword-based-v1.0
 
 ================================================================================
+```
+
+---
+
+## Interpretación de Resultados
+
+### Sentimiento General
+- **Clasificación**: La polaridad global de la opinión (POSITIVO/NEUTRAL/NEGATIVO)
+- **Confianza**: Qué tan seguro está el modelo de su clasificación (0.0 a 1.0)
+- **Pesos**: Probabilidades asignadas a cada clase
+
+### Categorización por Aspectos
+- **Calidad Didáctica**: Evalúa cómo enseña el profesor
+- **Método de Evaluación**: Evalúa la forma de evaluar y dificultad
+- **Empatía**: Evalúa el trato hacia los estudiantes
+
+### Palabras Clave
+Las palabras detectadas que influyeron en la categorización.
+
+---
+
+**Última actualización**: 2025-11-26  
+**Versión**: 1.1.0
