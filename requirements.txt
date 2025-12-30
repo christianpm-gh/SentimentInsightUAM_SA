@@ -31,6 +31,9 @@ spacy>=3.7                 # Procesamiento de lenguaje natural (opcional)
 matplotlib>=3.7.0
 seaborn>=0.13.0
 
+# MCP Servers
+mcp>=1.0.0                 # Model Context Protocol
+
 # Testing (desarrollo)
 pytest>=7.4.0
 pytest-asyncio>=0.21.0

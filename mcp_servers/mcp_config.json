@@ -1,0 +1,14 @@
+{
+  "mcpServers": {
+    "sentiment-postgres": {
+      "command": "/home/mr_ciem/dev/python-dev/SentimentInsightUAM_SA/venv/bin/python",
+      "args": ["/home/mr_ciem/dev/python-dev/SentimentInsightUAM_SA/mcp_servers/postgres_server.py"],
+      "env": {}
+    },
+    "sentiment-mongodb": {
+      "command": "/home/mr_ciem/dev/python-dev/SentimentInsightUAM_SA/venv/bin/python",
+      "args": ["/home/mr_ciem/dev/python-dev/SentimentInsightUAM_SA/mcp_servers/mongodb_server.py"],
+      "env": {}
+    }
+  }
+}

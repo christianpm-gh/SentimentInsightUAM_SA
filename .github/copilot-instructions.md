@@ -56,9 +56,6 @@ src/
 - **Dispositivos**: CPU, CUDA (GPU NVIDIA), MPS (Apple Silicon)
 
 ### ✅ Categorización por Aspectos
-- **Calidad Didáctica**: Claridad, dominio del tema, metodología
-- **Método de Evaluación**: Dificultad, justicia, carga de trabajo
-- **Empatía**: Trato al alumno, accesibilidad, comprensión
 
 ### ✅ CLI Completo
 1. **`analizar`** - Procesa opiniones pendientes

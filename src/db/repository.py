@@ -262,6 +262,39 @@ async def contar_opiniones_pendientes_sentimiento() -> int:
     )
 
 
+async def obtener_todas_las_opiniones(
+    limit: int = 100,
+    skip: int = 0
+) -> List[Dict[str, Any]]:
+    """
+    Obtiene todas las opiniones sin filtrar por estado de análisis.
+    Útil para forzar re-análisis.
+    
+    Args:
+        limit: Límite de resultados
+        skip: Número de documentos a omitir
+    
+    Returns:
+        Lista de documentos de opiniones
+    """
+    db = get_mongo_db()
+    
+    cursor = db.opiniones.find({}).skip(skip).limit(limit)
+    
+    return await cursor.to_list(length=limit)
+
+
+async def contar_todas_las_opiniones() -> int:
+    """
+    Cuenta el total de opiniones en MongoDB.
+    
+    Returns:
+        Número total de opiniones
+    """
+    db = get_mongo_db()
+    return await db.opiniones.count_documents({})
+
+
 async def contar_opiniones_pendientes_categorizacion() -> int:
     """
     Cuenta opiniones pendientes de categorización.
@@ -385,6 +418,8 @@ __all__ = [
     "contar_opiniones_totales",
     "obtener_opiniones_pendientes_sentimiento",
     "obtener_opiniones_pendientes_categorizacion",
+    "obtener_todas_las_opiniones",
+    "contar_todas_las_opiniones",
     "obtener_opinion_por_id",
     "obtener_opiniones_por_profesor",
     "obtener_opiniones_por_curso",

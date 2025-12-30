@@ -64,7 +64,7 @@ Sistema especializado de análisis de sentimientos usando modelos BERT pre-entre
 ## ✨ Características
 
 ### Análisis de Sentimiento (v1.0.0)
-- ✅ **Modelo BERT optimizado**: `finiteautomata/beto-sentiment-analysis`
+✅ **Modelo BERT optimizado**: `finiteautomata/beto-sentiment-analysis`
 - ✅ **Procesamiento en batch** para eficiencia
 - ✅ **CLI intuitivo** con 4 comandos
 - ✅ **Soporte multi-dispositivo** (CPU, CUDA, MPS)
@@ -72,9 +72,9 @@ Sistema especializado de análisis de sentimientos usando modelos BERT pre-entre
 - ✅ **Configuración flexible** via variables de entorno
 
 ### Categorización por Aspectos (v1.1.0)
-- ✅ **Calidad Didáctica**: Claridad, dominio del tema, metodología
-- ✅ **Método de Evaluación**: Dificultad, justicia, carga de trabajo
-- ✅ **Empatía**: Trato al alumno, accesibilidad, comprensión
+✅ **Calidad Didáctica**: Claridad, dominio del tema, metodología
+✅ **Método de Evaluación**: Dificultad, justicia, carga de trabajo
+✅ **Empatía**: Trato al alumno, accesibilidad, comprensión
 
 ---
 
@@ -316,8 +316,37 @@ python scripts/listar_profesores.py --limit 50
 python scripts/analisis_profesor.py 36
 python scripts/analisis_materia.py "Estructura de Datos"
 ```
+<<<<<<< HEAD
 
 > Documentación completa en [`scripts/README.md`](scripts/README.md)
+=======
+SentimentInsightUAM_SA/
+├── src/
+│   ├── __init__.py
+│   ├── cli.py                 # CLI principal con 4 comandos
+│   ├── core/                  # Utilidades core (futuro)
+│   ├── db/
+│   │   ├── __init__.py        # Conexiones async a BD
+│   │   ├── models.py          # Modelos ORM (solo lectura)
+│   │   └── repository.py      # Consultas especializadas
+│   └── ml/
+│       ├── __init__.py        # SentimentAnalyzer con BERT
+│       ├── categorizer.py     # OpinionCategorizer (palabras clave)
+│       └── processor.py       # OpinionProcessor (flujo completo)
+├── data/
+│   └── outputs/               # Resultados de análisis (futuro)
+├── models/
+│   └── cache/                 # Cache de modelos BERT
+├── docs/                      # Documentación adicional
+├── tests/                     # Tests (futuro)
+├── .github/
+│   └── copilot-instructions.md  # Contexto para Copilot
+├── requirements.txt           # Dependencias Python
+├── .env.example               # Template de variables de entorno
+├── .gitignore                 # Archivos ignorados por Git
+└── README.md                  # Este archivo
+```
+>>>>>>> 9ea22fd (fin)
 
 ---
 
@@ -355,36 +384,8 @@ which python  # .../SentimentInsightUAM_SA/venv/bin/python
 
 ---
 
-## 🤔 FAQ
 
-<details>
-<summary><strong>¿Necesito descargar el modelo BERT manualmente?</strong></summary>
-
-No. La primera vez que ejecutes un comando de análisis, el modelo se descargará automáticamente desde HuggingFace Hub y se guardará en `./models/cache/`. Esto puede tardar 2-5 minutos dependiendo de tu conexión.
-</details>
-
-<details>
-<summary><strong>¿Puedo usar GPU para acelerar el análisis?</strong></summary>
-
-Sí. Cambia la variable `DEVICE` en `.env`:
-
-```env
-DEVICE=cuda  # NVIDIA GPU
-DEVICE=mps   # Apple Silicon (M1/M2/M3)
-```
-
-Asegúrate de tener PyTorch instalado con soporte para tu GPU.
-</details>
-
-<details>
-<summary><strong>¿Qué pasa si las bases de datos no están corriendo?</strong></summary>
-
-El CLI mostrará un error de conexión. Inicia los contenedores Docker desde el proyecto principal:
-
-```bash
-cd ~/dev/python-dev/SentimentInsightUAM
-docker-compose up -d
-```
+> Documentación completa en [`scripts/README.md`](scripts/README.md)
 </details>
 
 <details>

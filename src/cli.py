@@ -40,8 +40,9 @@ async def comando_analizar(args):
     Args:
         args: Argumentos de línea de comandos
     """
+    modo = "FORZADO (todas las opiniones)" if args.force else "Opiniones Pendientes"
     print("\n" + "="*80)
-    print("ANÁLISIS DE SENTIMIENTO - Opiniones Pendientes")
+    print(f"ANÁLISIS DE SENTIMIENTO - {modo}")
     print("="*80 + "\n")
     
     try:
@@ -52,13 +53,14 @@ async def comando_analizar(args):
         processor = OpinionProcessor(batch_size=args.batch_size)
         
         # Mostrar estadísticas iniciales
-        stats = await processor.obtener_estadisticas()
-        print(f"Total de opiniones pendientes: {stats['total_pendientes']}")
+        stats = await processor.obtener_estadisticas(force=args.force)
+        label = "Total de opiniones" if args.force else "Total de opiniones pendientes"
+        print(f"{label}: {stats['total_pendientes']}")
         print(f"Modelo utilizado: {stats['modelo_version']}")
         print()
         
         if stats['total_pendientes'] == 0:
-            print("✓ No hay opiniones pendientes de análisis")
+            print("✓ No hay opiniones para analizar")
             return
         
         # Determinar cuántas procesar
@@ -70,7 +72,8 @@ async def comando_analizar(args):
         # Procesar
         resultado = await processor.procesar_pendientes(
             limit=limit,
-            skip=args.skip
+            skip=args.skip,
+            force=args.force
         )
         
         # Mostrar resultados
@@ -280,6 +283,12 @@ Ejemplos de uso:
         type=int,
         default=8,
         help='Tamaño de batch para procesamiento (default: 8)'
+    )
+    parser_analizar.add_argument(
+        '--force', '-f',
+        action='store_true',
+        default=False,
+        help='Forzar re-análisis de todas las opiniones (incluyendo ya analizadas)'
     )
     
     # Comando: profesor
